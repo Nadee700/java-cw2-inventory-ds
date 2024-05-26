@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+package inventory;
+
+message AddItemRequest {
+  string itemId = 1;
+  string name = 2;
+  int32 quantity = 3;
+  double price = 4;
+}
+
+message DeleteItemRequest {
+  string itemId = 1;
+}
+
+message EditItemRequest {
+  string itemId = 1;
+  string name = 2;
+  int32 quantity = 3;
+  double price = 4;
+}
+
+message ReservationRequest {
+  string reservationId = 1;
+  string itemId = 2;
+  int32 quantity = 3;
+  string name = 4;
+  string emailAddress = 5;
+}
+
+message ItemInfo {
+  string itemId = 1;
+  string name = 2;
+  int32 quantity = 3;
+  int32 reservedQuantity = 4;
+  int32 availableQuantity = 5;
+  double price = 6;
+}
+
+message ListItemsRequest {}
+
+message ListItemsResponse {
+  repeated ItemInfo items = 1;
+}
+
+message Response {
+  string message = 1;
+  bool success = 2;
+}
+
+service InventoryService {
+  rpc AddItem(AddItemRequest) returns (Response);
+  rpc DeleteItem(DeleteItemRequest) returns (Response);
+  rpc EditItem(EditItemRequest) returns (Response);
+  rpc ReserveItem(ReservationRequest) returns (Response);
+  rpc ListItems(ListItemsRequest) returns (ListItemsResponse);
+}
